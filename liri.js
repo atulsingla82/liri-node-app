@@ -50,7 +50,7 @@ switch(command){
         if(x){
             spotifySong(x);
         } else{
-            spotifySong("Fluorescent Adolescent");
+            spotifySong("The Sign");
         }
         break;
 
@@ -67,7 +67,7 @@ switch(command){
         break;
 
     default:
-        console.log("{Please enter a command: my-tweets, spotify-this-song, movie-this, do-what-it-says}".red);
+        console.log("{Please enter a command: my-tweets, spotify-this-song, movie-this, do-what-it-says}".green);
         break;
 }
 
@@ -79,10 +79,14 @@ function myTweets() {
 
             for (var i = 0; i < tweets.length; i++) {
 
-                // var date = tweets[i].created_at;
+                var date = tweets[i].created_at;
 
-                console.log("@asingla82:" + tweets[i].text);
-                console.log("--------------------------------")
+
+                console.log("");
+                console.log("@asingla82:" + tweets[i].text.red + " created: " + date.substring(0, 19));
+                console.log("");
+                console.log("-------------------------------------------------------")
+                console.log("");
             }
         } else {
 
@@ -90,6 +94,88 @@ function myTweets() {
         }
 
 
+    });
+
+}
+
+function spotifySong(song) {
+
+    var spotify = require('spotify');
+
+    spotify.search({ type: 'track', query: song }, function(err, data) {
+
+        if (err) throw err;
+        //this sets the variable music to get the initial information from the object, just so it's easier to call in the for loop below
+        var music = data.tracks.items;
+        //this loops through the object that we get from spotify and then loops through each objects information to get what we need from spotify
+        for (var i = 0; i<music.length; i++) {
+            for (j = 0; j < music[i].artists.length; j++) {
+                //artist
+                console.log(colors.bgYellow("Artist: ") + music[i].artists[j].name);
+                console.log("");
+                // song name
+                console.log(colors.bgYellow("Song Name: ") + music[i].name);
+                console.log("");
+                // link
+                console.log(colors.bgYellow("Preview:") + music[i].preview_url);
+                console.log("");
+                //album
+                console.log(colors.bgYellow("Album Name: ") + music[i].album.name + "\n");
+                console.log("-------------------------------------------------------".bold)
+            }
+
+        }
+
+    });
+    
+}
+
+function omdbData(movie) {
+
+    //  run a request to the OMDB API with the movie specified
+    var queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&tomatoes=true&r=json";
+    request(queryUrl, function(error, response, body) {
+
+        // If the request is successful
+        if (!error && response.statusCode === 200) {
+
+            // Parse the body of the site
+            var body = JSON.parse(body);
+
+            // retrive results
+            console.log(colors.bgRed("Title:" )+ body.Title);
+            console.log("");
+            console.log(colors.bgRed("Release Year: ") + body.Year);
+            console.log("");
+            console.log(colors.bgRed("IMdB Rating: ") + body.imdbRating);
+            console.log("");
+            console.log(colors.bgRed("Country: ") + body.Country);
+            console.log("");
+            console.log(colors.bgRed("Language: ") + body.Language);
+            console.log("");
+            console.log(colors.bgRed("Plot: ") + body.Plot);
+            console.log("");
+            console.log(colors.bgRed("Actors: ") + body.Actors);
+            console.log("");
+            console.log(colors.bgRed("Awards: ") + body.Awards);
+            console.log("");
+            console.log(colors.bgRed("Rotten Tomatoes Rating: ") + body.tomatoRating);
+            console.log("");
+            console.log(colors.bgRed("Rotten Tomatoes URL: ") + body.tomatoURL);
+            console.log("");
+            console.log(colors.bgRed("Website: ") + body.Website);
+            console.log("--------------------------------------------------------------------".bold)
+
+
+        } else{
+            console.log('Error occurred.')
+        }
+        if(movie === "Mr. Nobody") {
+
+            console.log("If you haven't watched 'Mr. Nobody', you should . It's on Netflix!");
+            console.log("--------------------------------------------------------------------".bold)
+            console.log("");
+        }
     });
 
 }
