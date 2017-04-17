@@ -4,7 +4,7 @@
 var keys = require('./keys.js');
 
 
-// Set up other required variables
+// Set up other required variables ==========
 
 var fs = require('fs');
 var Twitter = require('twitter');
@@ -14,7 +14,7 @@ var colors  = require('colors');
 var client = new Twitter(keys.twitterKeys);
 
 
-// Stored Arguments Array
+// Stored Arguments Array ===================
 
 var nodeArgv = process.argv;
 var command = process.argv[2];
@@ -37,7 +37,7 @@ for (var i = 3; i<nodeArgv.length;i++){
 }
 
 
-// Switch Case
+// Switch Case ================================
 
 switch(command){
     case "my-tweets":
@@ -69,7 +69,7 @@ switch(command){
         break;
 }
 
-
+// ==============================================
 
 function myTweets() {
 
@@ -85,8 +85,13 @@ function myTweets() {
                 console.log("");
                 console.log("@asingla82:" + tweets[i].text.red + " created: " + date.substring(0, 19));
                 console.log("");
-                console.log("-------------------------------------------------------")
+                console.log("-------------------------------------------------------".bold);
                 console.log("");
+
+                //=====adds text to log.txt file=========
+
+                fs.appendFileSync('log.txt', "@asingla82: " + tweets[i].text + " Created At: " + date.substring(0, 19));
+                fs.appendFileSync('log.txt', "-------------------------------------------");
             }
         } else {
 
@@ -97,6 +102,8 @@ function myTweets() {
     });
 
 }
+
+// ==============================================
 
 function spotifySong(song) {
 
@@ -122,6 +129,12 @@ function spotifySong(song) {
                 //album
                 console.log(colors.bgYellow("Album Name: ") + music[i].album.name );
                 console.log("-------------------------------------------------------".bold)
+
+                fs.appendFileSync('log.txt', music[i].artists[j].name);
+                fs.appendFileSync('log.txt', music[i].name);
+                fs.appendFileSync('log.txt', music[i].preview_url);
+                fs.appendFileSync('log.txt', music[i].album.name);
+                fs.appendFileSync('log.txt', "-----------------------------------------------");
             }
 
         }
@@ -129,6 +142,8 @@ function spotifySong(song) {
     });
     
 }
+
+//================================================
 
 function omdbData(movie) {
 
@@ -179,6 +194,8 @@ function omdbData(movie) {
     });
 
 }
+
+//=============================================
 
 function doWhat() {
     fs.readFile("random.txt", "utf8", function (error, data) {
