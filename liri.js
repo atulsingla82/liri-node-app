@@ -4,9 +4,6 @@
 var keys = require('./keys.js');
 
 
-
-
-
 // Set up other required variables
 
 var fs = require('fs');
@@ -22,7 +19,7 @@ var client = new Twitter(keys.twitterKeys);
 var nodeArgv = process.argv;
 var command = process.argv[2];
 
-// variable for movie or song
+// variable for songs and movies ============
 
 var x = "" ;
 
@@ -34,10 +31,11 @@ for (var i = 3; i<nodeArgv.length;i++){
         x = x + "+" + nodeArgv[i];
     } else {
 
-        // x = x + nodeArgv[i];
-        x += nodeArgv[i];
+        x = x + nodeArgv[i];
+        // x += nodeArgv[i];
     }
 }
+
 
 // Switch Case
 
@@ -70,6 +68,8 @@ switch(command){
         console.log("{Please enter a command: my-tweets, spotify-this-song, movie-this, do-what-it-says}".green);
         break;
 }
+
+
 
 function myTweets() {
 
@@ -120,7 +120,7 @@ function spotifySong(song) {
                 console.log(colors.bgYellow("Preview:") + music[i].preview_url);
                 console.log("");
                 //album
-                console.log(colors.bgYellow("Album Name: ") + music[i].album.name + "\n");
+                console.log(colors.bgYellow("Album Name: ") + music[i].album.name );
                 console.log("-------------------------------------------------------".bold)
             }
 
@@ -143,27 +143,27 @@ function omdbData(movie) {
             var body = JSON.parse(body);
 
             // retrive results
-            console.log(colors.bgRed("Title:" )+ body.Title);
+            console.log(colors.bgMagenta("Title:" )+ body.Title);
             console.log("");
-            console.log(colors.bgRed("Release Year: ") + body.Year);
+            console.log(colors.bgMagenta("Release Year: ") + body.Year);
             console.log("");
-            console.log(colors.bgRed("IMdB Rating: ") + body.imdbRating);
+            console.log(colors.bgMagenta("IMdB Rating: ") + body.imdbRating);
             console.log("");
-            console.log(colors.bgRed("Country: ") + body.Country);
+            console.log(colors.bgMagenta("Country: ") + body.Country);
             console.log("");
-            console.log(colors.bgRed("Language: ") + body.Language);
+            console.log(colors.bgMagenta("Language: ") + body.Language);
             console.log("");
-            console.log(colors.bgRed("Plot: ") + body.Plot);
+            console.log(colors.bgMagenta("Plot: ") + body.Plot);
             console.log("");
-            console.log(colors.bgRed("Actors: ") + body.Actors);
+            console.log(colors.bgMagenta("Actors: ") + body.Actors);
             console.log("");
-            console.log(colors.bgRed("Awards: ") + body.Awards);
+            console.log(colors.bgMagenta("Awards: ") + body.Awards);
             console.log("");
-            console.log(colors.bgRed("Rotten Tomatoes Rating: ") + body.tomatoRating);
+            console.log(colors.bgMagenta("Rotten Tomatoes Rating: ") + body.tomatoRating);
             console.log("");
-            console.log(colors.bgRed("Rotten Tomatoes URL: ") + body.tomatoURL);
+            console.log(colors.bgMagenta("Rotten Tomatoes URL: ") + body.tomatoURL);
             console.log("");
-            console.log(colors.bgRed("Website: ") + body.Website);
+            console.log(colors.bgMagenta("Website: ") + body.Website);
             console.log("--------------------------------------------------------------------".bold)
 
 
@@ -176,6 +176,20 @@ function omdbData(movie) {
             console.log("--------------------------------------------------------------------".bold)
             console.log("");
         }
+    });
+
+}
+
+function doWhat() {
+    fs.readFile("random.txt", "utf8", function (error, data) {
+
+
+        // split it by commas (to make it more readable)
+        var dataArr = data.split(",");
+
+       // console log the song from random.txt file
+        spotifySong(dataArr[1]);
+
     });
 
 }
