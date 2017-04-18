@@ -11,6 +11,7 @@ var Twitter = require('twitter');
 var spotify = require('spotify');
 var request = require('request');
 var colors  = require('colors');
+var inquirer = require("inquirer");
 var client = new Twitter(keys.twitterKeys);
 
 
@@ -39,6 +40,7 @@ for (var i = 3; i<nodeArgv.length;i++){
 
 // Switch Case ================================
 
+
 switch(command){
     case "my-tweets":
         myTweets();
@@ -65,15 +67,16 @@ switch(command){
         break;
 
     default:
-        console.log("{Please enter a command: my-tweets, spotify-this-song, movie-this, do-what-it-says}".green);
+        console.log("{Please choose a command: my-tweets, spotify-this-song, movie-this, do-what-it-says}".green);
         break;
+
 }
 
 // ==============================================
 
 function myTweets() {
 
-    var params = {screen_name: 'asingla82'};
+    var params = {screen_name: 'asingla82',count:20};
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         if (!error) {
 
@@ -83,14 +86,14 @@ function myTweets() {
 
 
                 console.log("");
-                console.log("@asingla82:" + tweets[i].text.red + " created: " + date.substring(0, 19));
+                console.log("@asingla82:" + tweets[i].text.red + " created: " + date.substring(0,19));
                 console.log("");
                 console.log("-------------------------------------------------------".bold);
                 console.log("");
 
                 //=====adds text to log.txt file=========
 
-                fs.appendFileSync('log.txt', "@asingla82: " + tweets[i].text + " Created At: " + date.substring(0, 19));
+                fs.appendFileSync('log.txt', "@asingla82: " + tweets[i].text + " Created At: " + date.substring(0,19));
                 fs.appendFileSync('log.txt', "-------------------------------------------");
             }
         } else {
@@ -128,7 +131,7 @@ function spotifySong(song) {
                 console.log("");
                 //album
                 console.log(colors.bgYellow("Album Name: ") + music[i].album.name );
-                console.log("-------------------------------------------------------".bold)
+                console.log("-------------------------------------------------------".bold);
 
                 fs.appendFileSync('log.txt', music[i].artists[j].name);
                 fs.appendFileSync('log.txt', music[i].name);
@@ -188,7 +191,7 @@ function omdbData(movie) {
         if(movie === "Mr. Nobody") {
 
             console.log("If you haven't watched 'Mr. Nobody', you should . It's on Netflix!");
-            console.log("--------------------------------------------------------------------".bold)
+            console.log("--------------------------------------------------------------------".bold);
             console.log("");
         }
     });

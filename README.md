@@ -1,5 +1,5 @@
-# liri-node-app
-liri-node-app
+
+
 
 Week 10 (LIRI Bot) Assignment
 
@@ -29,7 +29,7 @@ Artist(s)
 The song's name
 A preview link of the song from Spotify
 The album that the song is from
-Or if no song is passed through, it will default to *"Florescent Adolescent" by Arctic Monkeys
+Or if no song is passed through, it will default to "The Sign" by Ace of Base
 
 node liri.js movie-this <movie name>
 Shows the following information in terminal/bash.
