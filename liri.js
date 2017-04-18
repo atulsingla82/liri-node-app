@@ -91,7 +91,7 @@ function myTweets() {
                 console.log("-------------------------------------------------------".bold);
                 console.log("");
 
-                //=====adds text to log.txt file=========
+                //=====adds text to log.txt file================    
 
                 fs.appendFileSync('log.txt', "@asingla82: " + tweets[i].text + " Created At: " + date.substring(0,19));
                 fs.appendFileSync('log.txt', "-------------------------------------------");
